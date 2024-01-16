@@ -47,13 +47,38 @@ class Debit
         $this->chargeMe = $chargeMe;
     }
 
-    public function pay()
+    public function initialiseCollection(): string
     {
         $payload = $this->encodePayload();
 
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, 'https://live.broadpay.io/gateway/api/v1/momo/debit');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['payload' => $payload]));
+
+        $headers = array();
+        $headers[] = 'X-PUB-KEY: ' . $this->publicKey;
+        $headers[] = 'Content-Type: application/json';
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $result = curl_exec($ch);
+        if (curl_errno($ch)) {
+            echo 'Error:' . curl_error($ch);
+        }
+        curl_close($ch);
+
+        return $result;
+    }
+
+    public function initialiseDisbursement(): string
+    {
+        $payload = $this->encodePayload();
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://live.broadpay.io/gateway/api/v1/momo/credit');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['payload' => $payload]));
