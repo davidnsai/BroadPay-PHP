@@ -1,0 +1,23 @@
+{
+    "name": "davidnsai/davidnsai-broadpay-php",
+    "description": "This is a PHP library for the Broadpay API",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "David Nsai",
+            "email": "david@davidnsai.com",
+            "homepage": "https://davidnsai.com",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Broadpay\\": "src"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "firebase/php-jwt": "^6.10"
+    }
+}
