@@ -6,6 +6,7 @@ use \Firebase\JWT\JWT;
 
 class Credit
 {
+    // Declare private variables
     private string $privateKey;
     private string $publicKey;
     private float $amount;
@@ -19,6 +20,7 @@ class Credit
     private string $wallet;
     private bool $chargeMe;
 
+    // Constructor to initialize the class properties
     public function __construct(
         string $privateKey,
         string $publicKey,
@@ -47,33 +49,42 @@ class Credit
         $this->chargeMe = $chargeMe;
     }
 
+    // Method to initialize the disbursement
     public function initialiseDisbursement(): string
     {
+        // Encode the payload
         $payload = $this->encodePayload();
 
+        // Initialize cURL
         $ch = curl_init();
 
+        // Set cURL options
         curl_setopt($ch, CURLOPT_URL, 'https://live.broadpay.io/gateway/api/v1/momo/credit');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['payload' => $payload]));
 
+        // Set HTTP headers
         $headers = array();
         $headers[] = 'X-PUB-KEY: ' . $this->publicKey;
         $headers[] = 'Content-Type: application/json';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
+        // Execute the cURL request
         $result = curl_exec($ch);
         if (curl_errno($ch)) {
             echo 'Error:' . curl_error($ch);
         }
         curl_close($ch);
 
+        // Return the result
         return $result;
     }
 
+    // Method to encode the payload
     private function encodePayload(): string
     {
+        // Prepare the data
         $data = [
             "amount" => $this->amount,
             "currency" => $this->currency,
@@ -88,8 +99,10 @@ class Credit
             "chargeMe" => $this->chargeMe,
         ];
 
+        // Encode the data into a JWT
         $payload = JWT::encode($data, $this->privateKey, 'HS256');
 
+        // Return the payload
         return $payload;
     }
 }
