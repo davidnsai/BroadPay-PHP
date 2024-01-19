@@ -38,26 +38,26 @@ The code below assumes you are using a framework which has autoload functionalit
 		    	    $currency, //string
 		    	    $unique_merchant_reference, //string
 		    	    $customer_email, //string
-				      $customer_firstname, //string
-				      $customer_lastname, //string
-				      $customer_phone, //string
-				      $customer_address, //string
-				      $customer_city, //string
-				      $customer_state, //string
-				      $customer_country_code, //string
-				      $customer_postal_address, //string
-				      $webhook_url, //string, optional
-				      $redirect_url, //string, optional
-				      $auto_redirect, //bool, optional
-				);
-				$checkout_details  =  $checkout->createCheckoutLink();
+			    $customer_firstname, //string
+			    $customer_lastname, //string
+			    $customer_phone, //string
+			    $customer_address, //string
+			    $customer_city, //string
+			    $customer_state, //string
+			    $customer_country_code, //string
+			    $customer_postal_address, //string
+			    $webhook_url, //string, optional
+			    $redirect_url, //string, optional
+			    $auto_redirect, //bool, optional
+			);
+			$checkout_details  =  $checkout->createCheckoutLink();
     	    }   		
         }
 
 The following if the expected structure of data to be assigned to `$checkout_details` upon making a successful call to the server:
 
-        //json
-        {
+	        //json
+	        {
 		     "isError": false,
 		      "message": "",
 		      "paymentUrl":"https://checkout.sparco.io/eyJpZCI6IDEsICJtZXJjaGFudFB1YmxpY0tleSI6ICIyZmJmMTgyYzZmYzE0NTAwYjI4ZmRjOGM4M2VhYjczNCJ9",
@@ -68,10 +68,10 @@ The following if the expected structure of data to be assigned to `$checkout_det
 The API also allows the collection for funds a REST API call. The following sample code shows how this can be done:
 
     <?php
-    namespace  YourNamespace;        
-    use Broadpay\MobileMoney\Debit;
-    class  YourClassName
-    {
+    	namespace  YourNamespace;        
+    	use Broadpay\MobileMoney\Debit;
+    	class  YourClassName
+    	{
 	    public  function  index()
 	    {
     
@@ -89,7 +89,7 @@ The API also allows the collection for funds a REST API call. The following samp
 			    wallet: '0977123456'
 			   );
 				
-			$payment_result = $payment->initialiseCollection();
+		     $payment_result = $payment->initialiseCollection();
 		 }
 	}
 	
