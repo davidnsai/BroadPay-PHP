@@ -21,6 +21,7 @@ class Checkout
     private string $webhookUrl;
     private string $returnUrl;
     private bool $autoReturn;
+    private bool $chargeMe;
 
     public function __construct(
         string $publicKey,
@@ -40,6 +41,7 @@ class Checkout
         string $webhookUrl = '',
         string $returnUrl = '',
         bool $autoReturn = false,
+        bool $chargeMe = false
     ) {
         $this->publicKey = $publicKey;
         $this->transactionName = $transactionName;
@@ -58,6 +60,7 @@ class Checkout
         $this->webhookUrl = $webhookUrl;
         $this->returnUrl = $returnUrl;
         $this->autoReturn = $autoReturn;
+        $this->chargeMe = $chargeMe;
     }
 
     public function createCheckoutLink(): string
@@ -80,6 +83,7 @@ class Checkout
             "webhookUrl" => $this->webhookUrl,
             "returnUrl" => $this->returnUrl,
             "autoReturn" => $this->autoReturn,
+            "chargeMe" => $this->chargeMe,
         ];
 
         $ch = curl_init('https://checkout.broadpay.io/gateway/api/v1/checkout');
